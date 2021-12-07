@@ -17,6 +17,14 @@
         <f:textbox />
     </f:entry>
 
+    <f:entry field="preserveFolderStructure" title="Preserve Folder Structure">
+        <f:checkbox />
+    </f:entry>
+
+    <f:entry field="startFolder" title="Start Folder">
+        <f:textbox />
+    </f:entry>
+
     <f:entry field="includes" title="Includes">
         <f:textbox />
     </f:entry>

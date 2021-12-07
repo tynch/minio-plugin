@@ -25,6 +25,8 @@ public class MinioBuildStep extends Builder implements SimpleBuildStep {
     private String includes;
     private String excludes;
     private String targetFolder;
+    private boolean preserveFolderStructure;
+    private String startFolder;
 
     @DataBoundConstructor
     public MinioBuildStep(String bucket, String includes) {
@@ -87,6 +89,24 @@ public class MinioBuildStep extends Builder implements SimpleBuildStep {
 
     public String getTargetFolder() {
         return targetFolder;
+    }
+
+    public boolean isPreserveFolderStructure() {
+        return preserveFolderStructure;
+    }
+
+    @DataBoundSetter
+    public void setPreserveFolderStructure(boolean preserveFolderStructure) {
+        this.preserveFolderStructure = preserveFolderStructure;
+    }
+
+    public String getStartFolder() {
+        return startFolder;
+    }
+
+    @DataBoundSetter
+    public void setStartFolder(String startFolder) {
+        this.startFolder = startFolder;
     }
 
     @Symbol("minio")
