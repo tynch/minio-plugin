@@ -9,14 +9,13 @@ import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import io.jenkins.plugins.minio.ClientUtil;
-import io.minio.*;
-import io.minio.errors.*;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
 import org.apache.commons.lang.StringUtils;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Deque;
 
 /**
  * @author Ronald Kamphuis
@@ -45,7 +44,6 @@ public class MinioStepExecution {
         MinioClient client = ClientUtil.getClient(step.getHost(), step.getCredentialsId(), run);
 
         String targetBucket = step.getBucket();
-        ensureBucketExists(client, targetBucket);
 
         String includes = Util.replaceMacro(this.step.getIncludes(), env);
         String excludes = Util.replaceMacro(this.step.getExcludes(), env);
@@ -107,14 +105,5 @@ public class MinioStepExecution {
             slash = "/";
         }
         return result.toString();
-    }
-
-    private void ensureBucketExists(MinioClient client, String targetBucket)
-            throws ErrorResponseException, InsufficientDataException, InternalException, InvalidBucketNameException,
-            InvalidKeyException, InvalidResponseException, IOException, NoSuchAlgorithmException, ServerException,
-            XmlParserException, RegionConflictException {
-        if (!client.bucketExists(BucketExistsArgs.builder().bucket(targetBucket).build())) {
-            client.makeBucket(MakeBucketArgs.builder().bucket(targetBucket).build());
-        }
     }
 }
